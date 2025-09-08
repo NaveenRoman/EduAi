@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kase - Global Accelerator Program</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Professional Purple/Yellow Palette */
+    :root {
+      --purple-dark: #3e237c;
+      --purple-main: #5a368a;
+      --purple-light: #8c7cc9;
+      --yellow-main: #f7df1e;
+      --yellow-dark: #c4b802;
+      --yellow-light: #fff851;
+      --white-bg: #ffffff;
+      --black-text: #111111;
+      --purple-bg: #f3f1f6;
+      --yellow-bg: #fffce1;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+      background: var(--white-bg);
+      color: var(--black-text);
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar */
+    nav {
+      background: rgba(255 255 255 / 0.95);
+      backdrop-filter: saturate(180%) blur(12px);
+      border-bottom: 1px solid var(--purple-light);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 50;
+    }
+    nav a {
+      color: var(--purple-dark);
+      font-weight: 600;
+      transition: color 0.25s ease;
+      text-decoration: none;
+    }
+    nav a:hover, nav a:focus {
+      color: var(--yellow-main);
+      outline: none;
+    }
+    nav .logo {
+      color: var(--purple-main);
+      font-weight: 900;
+      font-size: 2.5rem;
+      user-select: none;
+    }
+    nav button {
+      color: var(--purple-main);
+    }
+
+    /* Hero Section */
+    .hero-bg {
+      position: relative;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple-main));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 4.5rem; /* for fixed nav */
+      text-align: center;
+      color: var(--white-bg);
+    }
+    .hero-content h1 {
+      font-weight: 900;
+      font-size: 4rem;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .hero-content h1 .highlight {
+      background: linear-gradient(135deg, var(--yellow-main), var(--yellow-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+    .hero-content p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+      line-height: 1.5;
+      opacity: 0.9;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--yellow-main), var(--yellow-dark));
+      color: var(--purple-dark);
+      padding: 1rem 2.5rem;
+      border-radius: 0.5rem;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(199, 183, 0, 0.6);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.125rem;
+    }
+    .btn-primary:hover, .btn-primary:focus {
+      background: linear-gradient(135deg, var(--yellow-dark), var(--yellow-main));
+      box-shadow: 0 6px 20px rgba(199, 183, 0, 0.85);
+      outline: none;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--white-bg);
+      color: var(--white-bg);
+      padding: 1rem 2.5rem;
+      border-radius: 0.5rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1.125rem;
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover, .btn-secondary:focus {
+      background: var(--white-bg);
+      color: var(--purple-dark);
+      outline: none;
+    }
+
+    /* Section Base */
+    section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      font-family: 'Georgia', serif;
+    }
+
+    /* Alternate Section Backgrounds & Text */
+    section:nth-child(odd) {
+      background-color: var(--yellow-bg);
+      color: var(--purple-dark);
+    }
+    section:nth-child(even) {
+      background-color: var(--purple-bg);
+      color: var(--purple-dark);
+    }
+
+    /* Override text color for sections with dark bg */
+    #home.hero-bg, #apply.section-padding.bg-purple-dark {
+      color: var(--white-bg);
+    }
+    #vision-mission-section {
+      background-color: var(--purple-bg);
+      color: var(--purple-dark);
+      padding-bottom: 5rem;
+    }
+    #vision-mission-section h2, #vision-mission-section h3 {
+      color: var(--purple-main);
+    }
+
+    /* Vision and Mission Section */
+    #vision-mission-section .vision-mission-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 3rem 4rem;
+      text-align: center;
+    }
+    #vision-mission-section .item svg {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      stroke: var(--purple-main);
+      fill: none;
+      stroke-width: 2;
+    }
+    #vision-mission-section h3 {
+      font-weight: 800;
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    #vision-mission-section p {
+      font-weight: 500;
+      line-height: 1.6;
+      max-width: 350px;
+      margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+      #vision-mission-section .vision-mission-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      #vision-mission-section p {
+        max-width: 100%;
+      }
+    }
+
+    /* Startups Section */
+    #startups {
+      background-color: var(--yellow-bg);
+      padding: 3rem 1.5rem;
+      border-radius: 2rem 2rem 0 0;
+      box-shadow: 0 8px 20px rgba(90, 54, 138, 0.15);
+      margin: 2rem auto 2rem;
+      max-width: 1200px;
+      color: var(--purple-dark);
+    }
+    #startups h2 {
+      font-weight: 800;
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
+      text-align: center;
+      font-family: 'Georgia', serif;
+      color: var(--purple-main);
+    }
+    .startup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-auto-rows: 120px;
+      gap: 2rem 3rem;
+      align-items: center;
+      justify-items: center;
+    }
+    .startup-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.5rem;
+      color: var(--purple-main);
+      font-family: 'Georgia', serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .startup-item img {
+      max-height: 80px;
+      width: auto;
+      max-width: 140px;
+      object-fit: contain;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+      transition: transform 0.3s ease;
+      cursor: default;
+    }
+    .startup-item img:hover {
+      transform: scale(1.1);
+    }
+    @media (max-width: 640px) {
+      #startups {
+        padding: 2rem 1rem;
+      }
+      #startups h2 {
+        font-size: 2rem;
+      }
+      .startup-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1.5rem 1.5rem;
+      }
+      .startup-item img {
+        max-height: 60px;
+      }
+    }
+
+    /* Marquee animation */
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-marquee {
+      display: flex;
+      width: max-content;
+      animation: marquee 30s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused; /* pause on hover */
+    }
+
+    /* Cards for Programs & Impact */
+    .card {
+      background: var(--white-bg);
+      box-shadow: 0 8px 20px rgba(90, 54, 138, 0.15);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid #ddd;
+      color: var(--purple-dark);
+      padding: 2rem;
+      text-align: left;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(90, 54, 138, 0.3);
+    }
+    .card h3 {
+      font-weight: 900;
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+    .card p {
+      color: #444;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .card ul {
+      margin-bottom: 1.5rem;
+    }
+    .card ul li {
+      margin-bottom: 0.6rem;
+      list-style-type: disc;
+      padding-left: 1.3rem;
+      color: var(--purple-dark);
+    }
+    .card ul li::marker {
+      color: var(--yellow-dark);
+    }
+    .card button {
+      background: linear-gradient(135deg, var(--purple-main), var(--purple-dark));
+      color: var(--white-bg);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      border: none;
+      font-weight: 700;
+      width: 100%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+    .card button:hover, .card button:focus {
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple-main));
+      outline: none;
+    }
+
+    /* Section Headings */
+    h2 {
+      font-weight: 800;
+      font-size: 2.75rem;
+      margin-bottom: 1.5rem;
+      font-family: 'Georgia', serif;
+      color: var(--purple-main);
+      text-align: center;
+    }
+
+    /* Stats Cards */
+    .stat-card {
+      background: var(--white-bg);
+      color: var(--purple-dark);
+      padding: 2rem;
+      border-radius: 1rem;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(90, 54, 138, 0.15);
+      font-weight: 600;
+      border: 1px solid #ddd;
+      transition: box-shadow 0.3s ease;
+    }
+    .stat-card:hover {
+      box-shadow: 0 20px 40px rgba(90, 54, 138, 0.3);
+    }
+    .stat-card .number {
+      font-size: 2.75rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--purple-main), var(--purple-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .stat-card p {
+      font-size: 1rem;
+      color: #444;
+    }
+
+    /* Testimonials */
+    #testimonials {
+      background-color: var(--purple-bg);
+      color: var(--purple-dark);
+      padding-bottom: 4rem;
+    }
+    #testimonials h2 {
+      color: var(--purple-main);
+    }
+    .testimonial-slider {
+      max-width: 500px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .testimonial {
+      display: none;
+      transition: opacity 0.5s ease;
+    }
+    .testimonial.active {
+      display: block;
+    }
+    .testimonial img {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      border: 4px solid var(--purple-main);
+      box-shadow: 0 4px 15px rgba(90, 54, 138, 0.25);
+      margin: 0 auto 1rem auto;
+      object-fit: cover;
+    }
+    blockquote {
+      font-style: italic;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--purple-dark);
+      line-height: 1.4;
+    }
+    cite {
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--purple-main);
+    }
+    .testimonial p {
+      color: #555;
+      font-size: 1rem;
+      margin-top: 0.1rem;
+    }
+    #testimonials button.btn-secondary {
+      margin-top: 1.5rem;
+      display: inline-block;
+      background: transparent;
+      border: 2px solid var(--purple-main);
+      color: var(--purple-main);
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+    #testimonials button.btn-secondary:hover, #testimonials button.btn-secondary:focus {
+      background: var(--purple-main);
+      color: var(--white-bg);
+      outline: none;
+    }
+
+    /* Apply Section */
+    #apply {
+      background: linear-gradient(135deg, var(--purple-dark), var(--purple-main));
+      color: var(--white-bg);
+      border-radius: 1rem;
+      padding: 3rem 2rem;
+      max-width: 600px;
+      margin: 3rem auto 6rem;
+      box-shadow: 0 6px 20px rgba(90, 54, 138, 0.4);
+    }
+    #apply h2 {
+      font-size: 2.75rem;
+      margin-bottom: 1rem;
+      color: var(--yellow-main);
+      font-family: 'Georgia', serif;
+      font-weight: 900;
+      text-align: center;
+    }
+    #apply p {
+      max-width: 500px;
+      margin: 0 auto 2rem auto;
+      font-size: 1.125rem;
+      line-height: 1.5;
+      text-align: center;
+      color: #fffde7;
+    }
+    #apply form {
+      background: var(--white-bg);
+      border-radius: 1rem;
+      padding: 2rem;
+      color: var(--purple-dark);
+      box-shadow: 0 4px 15px rgba(90, 54, 138, 0.2);
+    }
+    #apply form label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    #apply form input,
+    #apply form select,
+    #apply form textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: 1.5px solid #ccc;
+      border-radius: 0.5rem;
+      margin-bottom: 1.25rem;
+      font-family: inherit;
+      transition: border-color 0.3s ease;
+    }
+    #apply form input:focus,
+    #apply form select:focus,
+    #apply form textarea:focus {
+      border-color: var(--purple-main);
+      outline: none;
+      box-shadow: 0 0 8px var(--purple-light);
+    }
+    #apply form button.btn-primary {
+      background: linear-gradient(135deg, var(--yellow-main), var(--yellow-dark));
+      color: var(--purple-dark);
+      padding: 1rem;
+      font-weight: 700;
+      font-size: 1.25rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+    #apply form button.btn-primary:hover, #apply form button.btn-primary:focus {
+      background: linear-gradient(135deg, var(--yellow-dark), var(--yellow-main));
+      outline: none;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--purple-dark);
+      color: var(--yellow-main);
+      padding: 3rem 2rem;
+      font-family: 'Georgia', serif;
+      font-weight: 600;
+    }
+    footer a {
+      color: var(--yellow-main);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    footer a:hover, footer a:focus {
+      color: var(--white-bg);
+      outline: none;
+    }
+    footer .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      align-items: start;
+    }
+    footer h4 {
+      font-weight: 900;
+      margin-bottom: 1rem;
+      font-size: 1.125rem;
+    }
+    footer p, footer li {
+      color: var(--yellow-main);
+      font-size: 0.95rem;
+    }
+    footer ul {
+      list-style: none;
+      padding: 0;
+    }
+    footer ul li a {
+      color: var(--yellow-main);
+    }
+    footer ul li a:hover {
+      color: var(--white-bg);
+    }
+    footer .bottom-text {
+      border-top: 1px solid var(--yellow-main);
+      margin-top: 2rem;
+      padding-top: 1rem;
+      text-align: center;
+      font-weight: 400;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    @media (max-width: 640px) {
+      nav .container, footer .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+    }
+
+
+    /* Container for the scrolling wrapper */
+    .overflow-hidden {
+      overflow: hidden;
+    }
+
+    /* Animation keyframes for marquee scrolling effect */
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* Wrapper for horizontal scrolling with duplicated sets */
+    .animate-marquee {
+      display: flex;
+      width: 200%; /* Because we have duplicated sets side by side */
+      animation: marquee 20s linear infinite;
+    }
+
+    /* Inner sets that contain all startup items */
+    .animate-marquee > .flex {
+      flex: 0 0 50%; /* Each set takes half of the 200% width */
+      display: flex;
+      gap: 10px;
+    }
+
+    /* Individual startup items styling */
+    .startup-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 120px; /* Adjust as needed */
+    }
+
+    .startup-item img {
+      max-width: 100px;
+      height: auto;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .startup-item span {
+      font-size: 1rem;
+      text-align: center;
+    }
+
+
+    /* Key fix: Updated styling for Key Thrust Areas section */
+    /* Wrapper container */
+    #startups > section[aria-label="Key Thrust Areas"] {
+      background-color: #6b2c89; /* Purple background */
+      padding: 3rem 1rem;
+      color: white;
+      margin-top: 2rem;
+      border-radius: 1rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: 'Georgia', serif;
+    }
+
+    /* Title */
+    #startups > section[aria-label="Key Thrust Areas"] h2 {
+      font-weight: 900;
+      color: white;
+      margin-bottom: 2rem;
+      font-family: 'Georgia', serif;
+    }
+
+    /* Flex container */
+    #startups > section[aria-label="Key Thrust Areas"] > div {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Individual thrust area boxes */
+    #startups > section[aria-label="Key Thrust Areas"] > div > div {
+      background: white;
+      border-radius: 1rem; /* Rounded corners */
+      padding: 1.5rem 2rem;
+      width: 140px;
+      color: #6b2c89; /* Purple for text */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      text-align: center;
+      cursor: default;
+      user-select: none;
+    }
+    #startups > section[aria-label="Key Thrust Areas"] > div > div:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    #startups > section[aria-label="Key Thrust Areas"] > div > div img {
+      width: 60px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    /* Text styling */
+    #startups > section[aria-label="Key Thrust Areas"] > div > div span {
+      font-weight: 700;
+      font-size: 1rem;
+      text-align: center;
+      line-height: 1.3;
+      user-select: none;
+    }
+    @media (max-width: 640px) {
+      #startups > section[aria-label="Key Thrust Areas"] > div > div {
+        width: 120px;
+        padding: 1rem 1.5rem;
+      }
+      #startups > section[aria-label="Key Thrust Areas"] h2 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="fixed top-0 w-full z-50 shadow-md" aria-label="Primary navigation">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#home" class="logo" aria-label="Kase Global Accelerator Home">Kase</a>
+      <div class="hidden md:flex space-x-10" role="menubar">
+        <a href="#home" role="menuitem" tabindex="0">Home</a>
+        <a href="#vision-mission-section" role="menuitem" tabindex="0">Vision &amp; Mission</a>
+        <a href="#startups" role="menuitem" tabindex="0">Startups</a>
+        <a href="#programs" role="menuitem" tabindex="0">Programs</a>
+        <a href="#impact" role="menuitem" tabindex="0">Impact</a>
+        <a href="#testimonials" role="menuitem" tabindex="0">Testimonials</a>
+        <a href="#apply" role="menuitem" tabindex="0">Apply</a>
+      </div>
+      <button class="md:hidden text-purple-main text-3xl focus:outline-none" aria-label="Toggle menu" onclick="toggleMenu()">☰</button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white px-6 py-4 border-t border-purple-light">
+      <nav class="flex flex-col space-y-4">
+        <a href="#home" class="text-purple-main hover:text-purple-dark" onclick="toggleMenu()">Home</a>
+        <a href="#vision-mission-section" class="text-purple-main hover:text-purple-dark" onclick="toggleMenu()">Vision &amp; Mission</a>
+        <a href="#startups" class="text-purple-main hover:text-purple-dark" onclick="toggleMenu()">Startups</a>
+        <a href="#programs" class="text-purple-main hover:text-purple-dark" onclick="toggleMenu()">Programs</a>
+        <a href="#impact" class="text-purple-main hover:text-purple-dark" onclick="toggleMenu()">Impact</a>
+        <a href="#testimonials" class="text-purple-main hover:text-purple-dark" onclick="toggleMenu()">Testimonials</a>
+        <a href="#apply" class="text-purple-main hover:text-purple-dark" onclick="toggleMenu()">Apply</a>
+      </nav>
+    </div>
+  </nav>
+
+  <section id="home" class="hero-bg" aria-label="Kase Accelerator For Social Entrepreneurs">
+    <div class="hero-content px-6 max-w-4xl mx-auto" role="main">
+      <h1 aria-label="Kase Accelerator For Social Entrepreneurs">
+        <span>Kase Accelerator For&nbsp;</span>
+        <span class="highlight">Social Entrepreneurs</span>
+      </h1>
+      <p>
+        Join an elite accelerator program inspired by the world's leading innovation hubs. Transform groundbreaking ideas into scalable businesses with world-class mentorship, funding, and networks.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+        <button class="btn-primary" onclick="scrollToSection('apply')" aria-label="Start Your Journey Button">Start Your Journey</button>
+        <button class="btn-secondary" onclick="scrollToSection('vision-mission-section')" aria-label="Our Vision Button">Our Vision</button>
+      </div>
+    </div>
+  </section>
+
+<section id="vision-mission-section" aria-label="Our Vision and Mission" class="py-12 bg-white max-w-7xl mx-auto px-6">
+  <h2 class="text-3xl md:text-4xl font-extrabold text-center text-[var(--red-dark)] mb-10">
+    Our Vision &amp; Mission
+  </h2>
+
+  <div class="vision-mission-grid grid md:grid-cols-2 gap-10">
+    
+    <!-- Vision -->
+    <div class="item flex flex-col gap-4 p-6 rounded-xl shadow hover:shadow-lg transition" tabindex="0">
+      <div class="flex items-center gap-3">
+        <svg class="w-10 h-10 text-[var(--red-main)] flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24" fill="none">
+          <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor"
+                d="M15 12 A3 3 0 1 1 9 12 A3 3 0 1 1 15 12zM2 12 s4 -8 10 -8 10 8 10 8 -4 8 -10 8 -10 -8 -10 -8z"/>
+        </svg>
+        <h3 class="text-xl md:text-2xl font-bold text-gray-900">Our Vision</h3>
+      </div>
+      <p class="text-gray-700 leading-relaxed">
+        Our vision is to empower and transform communities through sustainable social entrepreneurship,
+        where innovation and technology converge to address global challenges. We envision a world where
+        Agriculture, Environment, Equity, Wellbeing, Education and Accessibility Tech innovations thrive,
+        fostering equitable growth and positive social impact.
+      </p>
+    </div>
+
+    <!-- Mission -->
+    <div class="item flex flex-col gap-4 p-6 rounded-xl shadow hover:shadow-lg transition" tabindex="0">
+      <div class="flex items-center gap-3">
+        <svg class="w-10 h-10 text-[var(--red-main)] flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2" fill="none"/>
+          <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 8 l4 4"/>
+          <circle cx="16" cy="12" r="1" fill="currentColor"/>
+          <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M18 6 l-6 6"/>
+        </svg>
+        <h3 class="text-xl md:text-2xl font-bold text-gray-900">Our Mission</h3>
+      </div>
+      <p class="text-gray-700 leading-relaxed">
+        Our mission is to be a catalyst for positive change by providing a nurturing ecosystem that supports
+        social entrepreneurs working in alignment with our thrust areas. Through targeted incubation, mentorship,
+        and acceleration programs, we aim to cultivate groundbreaking solutions that address pressing global
+        challenges and enhance the well-being of individuals, communities, and the environment.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* Container for the scrolling wrapper */
+  .overflow-hidden {
+    overflow: hidden;
+  }
+
+  /* Animation keyframes for marquee scrolling effect */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Wrapper for horizontal scrolling with duplicated sets */
+  .animate-marquee {
+    display: flex;
+    width: 200%; /* Because we have duplicated sets side by side */
+    animation: marquee 20s linear infinite;
+  }
+
+  /* Inner sets that contain all startup items */
+  .animate-marquee > .flex {
+    flex: 0 0 50%; /* Each set takes half of the 200% width */
+    display: flex;
+    gap: 10px;
+  }
+
+  /* Individual startup items styling */
+  .startup-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 120px; /* Adjust as needed */
+  }
+
+  .startup-item img {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .startup-item span {
+    font-size: 1rem;
+    text-align: center;
+  }
+</style>
+<section id="startups" aria-label="Our Startups">
+  <h2>Our Startups</h2>
+  <!-- Scrolling Wrapper -->
+  <div class="overflow-hidden relative w-full">
+    <div class="flex gap-10 animate-marquee" role="list" aria-label="Startup Companies">
+
+      <!-- Original Set -->
+      <div class="flex gap-10">
+        <div class="startup-item" role="listitem">
+          <img src="Assets/Componova.jpg" alt="Componova Logo" />
+          <span>Componova</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/vaarahi.png" alt="Vaarahi Logo" />
+          <span>Vaarahi</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/Zenith.png" alt="Zenith Dri Solutions Logo" />
+          <span>Zenith Dri Solutions</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/advertising.jpg" alt="Envirak Logo" />
+          <span>Envirak</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/navedhana.jpg" alt="NPA Navedhana Logo" />
+          <span>NPA Navedhana</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/sackhe.png" alt="Sackhe Logo" />
+          <span>Sackhe</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/vaman.png" alt="Vaman Logo" />
+          <span>Vaman</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/trinefly.png" alt="Trine Fly Logo" />
+          <span>Trine Fly</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/kaanthi.png" alt="Kaanthi Logo" />
+          <span>Kaanthi</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/Red.png" alt="RedSecOps Logo" />
+          <span>RedSecOps</span>
+        </div>
+      </div>
+
+      <!-- Duplicate Set (for seamless loop) -->
+      <div class="flex gap-10">
+        <div class="startup-item" role="listitem">
+          <img src="Assets/Componova.jpg" alt="Componova Logo" />
+          <span>Componova</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/vaarahi.png" alt="Vaarahi Logo" />
+          <span>Vaarahi</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/Zenith.png" alt="Zenith Dri Solutions Logo" />
+          <span>Zenith Dri Solutions</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/advertising.jpg" alt="Envirak Logo" />
+          <span>Envirak</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/navedhana.jpg" alt="NPA Navedhana Logo" />
+          <span>NPA Navedhana</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/sackhe.png" alt="Sackhe Logo" />
+          <span>Sackhe</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/vaman.png" alt="Vaman Logo" />
+          <span>Vaman</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/trinefly.png" alt="Trine Fly Logo" />
+          <span>Trine Fly</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/kaanthi.png" alt="Kaanthi Logo" />
+          <span>Kaanthi</span>
+        </div>
+        <div class="startup-item" role="listitem">
+          <img src="Assets/Red.png" alt="RedSecOps Logo" />
+          <span>RedSecOps</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Key Thrust Areas Section -->
+  <section aria-label="Key Thrust Areas">
+    <h2>Key Thrust Areas</h2>
+    <div>
+      
+      <div>
+        <img src="Assets/agri.jpg" alt="Agri Tech Icon" />
+        <span>Agri Tech</span>
+      </div>
+
+      <div>
+        <img src="Assets/green.jpg" alt="Green Tech Icon" />
+        <span>Green Tech</span>
+      </div>
+
+      <div>
+        <img src="Assets/health.jpg" alt="Health Tech and Wellbeing Icon" />
+        <span>Health Tech and Wellbeing</span>
+      </div>
+
+      <div>
+        <img src="Assets/gender.jpg" alt="Gender Equity and Social Justice Icon" />
+        <span>Gender Equity and Social Justice</span>
+      </div>
+
+      <div>
+        <img src="Assets/assistive.jpg" alt="Assistive Tech Icon" />
+        <span>Assistive Tech</span>
+      </div>
+
+      <div>
+        <img src="Assets/edu.jpg" alt="Edu-Tech Icon" />
+        <span>Edu-Tech</span>
+      </div>
+
+    </div>
+  </section>
+
+</section>
+
+
+<!-- The rest of your content ... (Facilities, Programs, Impact, Testimonials, Footer and scripts) -->
+
+<!-- Facility Section -->
+<section id="facilities" aria-label="Facilities" class="py-16 bg-[#4b3a84] text-white">
+  <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-12">Facilities</h2>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto px-6">
+
+    <!-- Facility Card -->
+    <div class="facility-card group relative bg-white text-[#4b3a84] rounded-xl shadow-lg overflow-hidden">
+      
+      <!-- Decorative Box Above Heading -->
+      <div class="decorative-bar"></div>
+
+      <!-- Image -->
+      <div class="image-container">
+        <img src="Assets/cospace.jpg" alt="Co-Working Space" />
+      </div>
+
+      <!-- Heading -->
+      <h3 class="facility-heading">Co-Working Space</h3>
+      
+      <!-- Description -->
+      <p class="facility-desc">
+        A shared space designed <br>for collaboration and networking.
+      </p>
+
+    </div>
+
+    <!-- Makers Lab -->
+    <div class="facility-card group relative bg-white text-[#4b3a84] rounded-xl shadow-lg overflow-hidden">
+      <div class="decorative-bar"></div>
+      <div class="image-container">
+        <img src="Assets/lab.jpg" alt="Makers Lab" />
+      </div>
+      <h3 class="facility-heading">Makers Lab</h3>
+      <p class="facility-desc">
+        Prototype, experiment, <br>and build innovative solutions.
+      </p>
+    </div>
+
+    <!-- IP Facilitation Centre -->
+    <div class="facility-card group relative bg-white text-[#4b3a84] rounded-xl shadow-lg overflow-hidden">
+      <div class="decorative-bar"></div>
+      <div class="image-container">
+        <img src="Assets/ip.jpg" alt="IP Facilitation Centre" />
+      </div>
+      <h3 class="facility-heading">IP Facilitation Centre</h3>
+      <p class="facility-desc">
+        Support for intellectual <br>property rights and patents.
+      </p>
+    </div>
+
+    <!-- Mentorship -->
+    <div class="facility-card group relative bg-white text-[#4b3a84] rounded-xl shadow-lg overflow-hidden">
+      <div class="decorative-bar"></div>
+      <div class="image-container">
+        <img src="Assets/mentorship.jpg" alt="Mentorship" />
+      </div>
+      <h3 class="facility-heading">Mentorship & Advisory</h3>
+      <p class="facility-desc">
+        Expert guidance for <br>strategy, growth, and impact.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .facility-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 1rem 3rem 1rem;
+    position: relative;
+    height: 350px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Decorative bar above the heading */
+  .decorative-bar {
+    width: 60px;
+    height: 8px;
+    background: #6b2c89; /* Matching color from your scheme */
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+
+  /* Image container with fixed height */
+  .image-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 1rem;
+  }
+
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  /* Heading styling */
+  .facility-heading {
+    margin-top: 1rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* Description positioned at about half way */
+  .facility-desc {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    text-align: center;
+    color: #4b3a84;
+    max-width: 90%;
+    line-height: 1.3;
+    transition: opacity 0.4s ease;
+  }
+
+  /* Hover effect */
+  .facility-card:hover .facility-desc,
+  .facility-card:hover .facility-heading {
+    opacity: 0;
+  }
+
+  .facility-card:hover .image-container img {
+    transform: scale(1.05);
+  }
+</style>
+
+
+
+
+
+<section id="programs" aria-label="Accelerator Programs" style="padding: 4rem 1rem; background-color: #f9f9fc; font-family: 'Inter', sans-serif;">
+  <h2 style="text-align: center; font-size: 2.75rem; font-weight: 700; color: #3a2f6b; margin-bottom: 1rem;">
+    Accelerator Programs
+  </h2>
+  <p class="text-center max-w-3xl mx-auto mb-12" style="color: #5a4d9d; font-weight: 500; font-size: 1.125rem; max-width: 720px; margin-left: auto; margin-right: auto;">
+    Choose from our suite of programs designed to accelerate your startup's growth at every stage.
+  </p>
+  <div class="grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; max-width: 1200px; margin: 0 auto;">
+    <div class="card" tabindex="0" style="background: #fff; border-radius: 12px; padding: 2rem; box-shadow: 0 6px 15px rgba(75, 58, 132, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;">
+      <div class="icon" role="img" aria-label="Rocket emoji" style="font-size: 3.5rem; margin-bottom: 1.25rem; color: #6c54b8;">🚀</div>
+      <h3 style="font-size: 1.5rem; font-weight: 700; color: #3a2f6b; margin-bottom: 0.75rem;">Launch Accelerator</h3>
+      <p style="font-size: 1rem; color: #5a4d9d; line-height: 1.5; margin-bottom: 1rem;">
+        Transform your idea into a viable startup with our 12-week intensive program. Includes mentorship, technical support, and <strong>$50K seed funding</strong>.
+      </p>
+      <ul style="list-style-type: disc; padding-left: 1.25rem; margin-bottom: 1.5rem; color: #6b5fa6; font-weight: 500; font-size: 0.95rem;">
+        <li>One-on-one mentor sessions</li>
+        <li>Technical workshops</li>
+        <li>Investor pitch training</li>
+      </ul>
+      <button onclick="showProgramDetails('launch')" aria-label="Learn more about Launch Accelerator Program" style="background-color: #6c54b8; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background-color 0.3s ease;">
+        Learn More
+      </button>
+    </div>
+
+    <div class="card" tabindex="0" style="background: #fff; border-radius: 12px; padding: 2rem; box-shadow: 0 6px 15px rgba(75, 58, 132, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;">
+      <div class="icon" role="img" aria-label="Globe emoji" style="font-size: 3.5rem; margin-bottom: 1.25rem; color: #6c54b8;">🌍</div>
+      <h3 style="font-size: 1.5rem; font-weight: 700; color: #3a2f6b; margin-bottom: 0.75rem;">Global Expansion</h3>
+      <p style="font-size: 1rem; color: #5a4d9d; line-height: 1.5; margin-bottom: 1rem;">
+        Scale internationally with our global network of partners. Access markets in 60+ countries with localized strategies.
+      </p>
+      <ul style="list-style-type: disc; padding-left: 1.25rem; margin-bottom: 1.5rem; color: #6b5fa6; font-weight: 500; font-size: 0.95rem;">
+        <li>Market research support</li>
+        <li>Regulatory guidance</li>
+        <li>International partnerships</li>
+      </ul>
+      <button onclick="showProgramDetails('global')" aria-label="Learn more about Global Expansion Program" style="background-color: #6c54b8; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background-color 0.3s ease;">
+        Learn More
+      </button>
+    </div>
+
+    <div class="card" tabindex="0" style="background: #fff; border-radius: 12px; padding: 2rem; box-shadow: 0 6px 15px rgba(75, 58, 132, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;">
+      <div class="icon" role="img" aria-label="Rocket emoji" style="font-size: 3.5rem; margin-bottom: 1.25rem; color: #6c54b8;">🚀</div>
+      <h3 style="font-size: 1.5rem; font-weight: 700; color: #3a2f6b; margin-bottom: 0.75rem;">Scale-up Program</h3>
+      <p style="font-size: 1rem; color: #5a4d9d; line-height: 1.5; margin-bottom: 1rem;">
+        For established startups seeking rapid growth. Receive strategic support, additional funding, and expansion resources.
+      </p>
+      <ul style="list-style-type: disc; padding-left: 1.25rem; margin-bottom: 1.5rem; color: #6b5fa6; font-weight: 500; font-size: 0.95rem;">
+        <li>Advanced mentorship</li>
+        <li>Strategic planning</li>
+        <li>Follow-on funding</li>
+      </ul>
+      <button onclick="showProgramDetails('scale')" aria-label="Learn more about Scale-up Program" style="background-color: #6c54b8; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background-color 0.3s ease;">
+        Learn More
+      </button>
+    </div>
+  </div>
+
+  <style>
+    /* Hover and focus effect for cards */
+    .card:hover,
+    .card:focus {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(75, 58, 132, 0.25);
+      outline: none;
+    }
+
+    /* Button hover effect */
+    button:hover,
+    button:focus {
+      background-color: #5746a0;
+      outline: none;
+    }
+  </style>
+</section>
+
+
+
+  <section id="impact" aria-label="Our Impact">
+    <h2>KASE @ KGR — Our Impact</h2>
+    <p class="text-center max-w-3xl mx-auto mb-12" style="color:#4b3a84; font-family: 'Inter', sans-serif; font-weight: 500;">
+      Measurable outcomes from skills, startups, and industry collaboration at KGR.
+    </p>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
+      <div class="stat-card">
+        <div class="number">500+</div>
+        <p>Students Trained</p>
+      </div>
+      <div class="stat-card">
+        <div class="number">20+</div>
+        <p>Startups Incubated</p>
+      </div>
+      <div class="stat-card">
+        <div class="number">₹1Cr+</div>
+        <p>Grants &amp; Funding Facilitated</p>
+      </div>
+      <div class="stat-card">
+        <div class="number">40+</div>
+        <p>Industry MoUs</p>
+      </div>
+      <div class="stat-card">
+        <div class="number">15+</div>
+        <p>Patents &amp; Disclosures</p>
+      </div>
+      <div class="stat-card">
+        <div class="number">200+</div>
+        <p>Internships &amp; Placements via KASE</p>
+      </div>
+    </div>
+    <div class="text-center mt-12">
+      <a href="#programs" class="inline-block px-6 py-3 rounded-2xl font-semibold bg-var(--purple-main) text-yellow-main hover:bg-var(--purple-dark) transition">
+        Explore Programs
+      </a>
+    </div>
+  </section>
+
+  
+  <style>
+    /* Basic Reset & Fonts */
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif, Arial, sans-serif;
+      background: #f9f9f9;
+      color: #4b3a84;
+    }
+
+    section#testimonials {
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #4b3a84;
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p.text-center {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+      font-weight: 500;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+
+    .testimonial-slider {
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .testimonial {
+      display: none;
+      text-align: center;
+      outline: none;
+    }
+
+    .testimonial.active {
+      display: block;
+    }
+
+    .testimonial img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    blockquote {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin: 20px auto 10px auto;
+      max-width: 600px;
+      font-style: italic;
+      color: #3a2f6b;
+    }
+
+    cite {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+      font-size: 1.1rem;
+      color: #4b3a84;
+    }
+
+    .testimonial p {
+      margin: 4px 0 15px 0;
+      font-weight: 600;
+      color: #6a5cae;
+    }
+
+    .btn-secondary {
+      background-color: #6a5cae;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus {
+      background-color: #4b3a84;
+      outline: none;
+    }
+
+    /* Navigation buttons container */
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 40px;
+    }
+
+    /* Video Modal */
+    #videoModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    #videoModal.active {
+      display: flex;
+    }
+
+    #videoModal > div {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    }
+
+    #closeBtn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      color: #fff;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      user-select: none;
+    }
+
+    #closeBtn:hover,
+    #closeBtn:focus {
+      color: #6a5cae;
+      outline: none;
+    }
+
+    video#founderVideo {
+      width: 100%;
+      height: auto;
+      max-height: 90vh;
+      display: block;
+      background: black;
+    }
+  </style>
+
+
+  <!-- Founder Stories Section -->
+  <section id="testimonials" aria-label="Founder Stories">
+    <h2>Founder Stories</h2>
+    <p class="text-center">
+      Hear from leaders who transformed their visions into reality through our programs.
+    </p>
+
+    <div class="testimonial-slider" role="region" aria-live="polite" aria-atomic="true">
+
+      <!-- Rohit -->
+      <div class="testimonial active" role="tabpanel" tabindex="0" aria-label="Testimonial from Rohit, Director">
+        <img src="Assets/rohit.jpg" alt="Photo of Rohit" />
+        <blockquote>
+          "At KASE, I discovered not just mentorship but a vision for scaling innovation. The support turned bold ideas into executable strategies."
+        </blockquote>
+        <cite>Rohit</cite>
+        <p>Director</p>
+        <button class="btn-secondary" onclick="openVideo('rohit')" aria-haspopup="dialog" aria-controls="videoModal" aria-expanded="false">▶ Watch Story</button>
+      </div>
+
+      <!-- Satya -->
+      <div class="testimonial" role="tabpanel" tabindex="0" aria-label="Testimonial from Satya, CEO">
+        <img src="Assets/satya.jpg" alt="Photo of Satya" />
+        <blockquote>
+          "KASE empowered us with the network and ecosystem to build global-ready startups. Our journey accelerated beyond expectations."
+        </blockquote>
+        <cite>Satya</cite>
+        <p>CEO</p>
+        <button class="btn-secondary" onclick="openVideo('satya')" aria-haspopup="dialog" aria-controls="videoModal" aria-expanded="false">▶ Watch Story</button>
+      </div>
+
+      <!-- Suresh -->
+      <div class="testimonial" role="tabpanel" tabindex="0" aria-label="Testimonial from Suresh, Head of Innovation">
+        <img src="Assets/suresh.jpg" alt="Photo of Suresh" />
+        <blockquote>
+          "Driving innovation at KASE means shaping ideas into impactful solutions. The ecosystem gave us the freedom to experiment and scale."
+        </blockquote>
+        <cite>Suresh</cite>
+        <p>Head of Innovation</p>
+        <button class="btn-secondary" onclick="openVideo('suresh')" aria-haspopup="dialog" aria-controls="videoModal" aria-expanded="false">▶ Watch Story</button>
+      </div>
+    </div>
+
+    <!-- Navigation buttons -->
+    <div class="nav-buttons" role="group" aria-label="Testimonial navigation">
+      <button class="btn-secondary" onclick="prevTestimonial()" aria-label="Previous testimonial story">
+        ⬅ Previous Story
+      </button>
+      <button class="btn-secondary" onclick="nextTestimonial()" aria-label="Next testimonial story">
+        Next Story ➡
+      </button>
+    </div>
+  </section>
+
+  <!-- Video Modal -->
+  <div id="videoModal" role="dialog" aria-modal="true" aria-labelledby="videoTitle" tabindex="-1">
+    <div>
+      <button id="closeBtn" aria-label="Close Video">✖</button>
+      <video id="founderVideo" controls>
+        <source id="videoSource" src="" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <script>
+    // Testimonial slider logic
+    let currentIndex = 0;
+    const testimonials = document.querySelectorAll(".testimonial");
+    let lastFocusedButton = null;
+
+    function showTestimonial(index) {
+      testimonials.forEach((t, i) => {
+        if (i === index) {
+          t.classList.add("active");
+          t.setAttribute("aria-hidden", "false");
+          t.style.display = "block";
+          t.focus();
+        } else {
+          t.classList.remove("active");
+          t.setAttribute("aria-hidden", "true");
+          t.style.display = "none";
+        }
+      });
+    }
+
+    function nextTestimonial() {
+      currentIndex = (currentIndex + 1) % testimonials.length;
+      showTestimonial(currentIndex);
+    }
+
+    function prevTestimonial() {
+      currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+      showTestimonial(currentIndex);
+    }
+
+    // Open video modal
+    function openVideo(id) {
+      const modal = document.getElementById("videoModal");
+      const video = document.getElementById("founderVideo");
+      const source = document.getElementById("videoSource");
+
+      const videoMap = {
+        rohit: "Videos/rohit.mp4",
+        satya: "Videos/satya.mp4",
+        suresh: "Videos/suresh.mp4"
+      };
+
+      source.src = videoMap[id];
+      video.load();
+
+      modal.classList.add("active");
+      modal.style.display = "flex";
+
+      // Save last focused element to return focus later
+      lastFocusedButton = document.activeElement;
+
+      // Update aria-expanded on the button that opened modal
+      if (lastFocusedButton) {
+        lastFocusedButton.setAttribute("aria-expanded", "true");
+      }
+
+      // Focus modal for accessibility
+      modal.focus();
+    }
+
+    // Close video modal
+    function closeVideo() {
+      const modal = document.getElementById("videoModal");
+      const video = document.getElementById("founderVideo");
+      const source = document.getElementById("videoSource");
+
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+
+      if (source) {
+        source.src = "";
+        video.load();
+      }
+
+      modal.classList.remove("active");
+      modal.style.display = "none";
+
+      // Return focus to the last focused button
+      if (lastFocusedButton) {
+        lastFocusedButton.setAttribute("aria-expanded", "false");
+        lastFocusedButton.focus();
+      }
+    }
+
+    // Attach event listeners after DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      const closeBtn = document.getElementById('closeBtn');
+      closeBtn.addEventListener('click', closeVideo);
+
+      // ESC key closes modal
+      document.addEventListener('keydown', (e) => {
+        const modal = document.getElementById("videoModal");
+        if (e.key === "Escape" && modal.classList.contains("active")) {
+          closeVideo();
+        }
+      });
+
+      // Initialize first testimonial visible
+      showTestimonial(currentIndex);
+    });
+  </script>
+
+
+
+
+<!-- Updated Ecosystem Partners Section -->
+<section id="ecosystem-partners" aria-label="Ecosystem Partners" class="my-16 text-center px-4">
+  <h2 style="color:#632e96; font-family: 'Inter', sans-serif; font-weight: 800; font-size: 2.75rem; margin-bottom: 3rem; letter-spacing: 1px;">
+    Ecosystem Partners
+  </h2>
+  <div class="partners-logos max-w-7xl mx-auto grid grid-cols-5 gap-12 items-center justify-center">
+    <img src="Assets/osmani.png" alt="Osmania Technology Business Incubator Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/wehub.png" alt="WE HUB Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/bala.png" alt="Balavikasa csrb Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/palle.png" alt="Palle Pragna Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/aghub.png" alt="AgHub Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/kakatiya.png" alt="Kakatiya Sandbox Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/bit.png" alt="ACIC CBIT Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/aic.png" alt="AIC IIITH Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/song.png" alt="INDQ Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/pan.png" alt="PALS Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/kanthari.png" alt="Kanthari Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/wadhwani.png" alt="Wadhwani Foundation Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/tharunam.png" alt="Tharunam Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/chance.png" alt="Be the Change Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/recykal.png" alt="Recykal Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/dehub.png" alt="de-Hub Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/plus.png" alt="Community Group Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/to.png" alt="Surge to Aspire Foundation Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/house.png" alt="Bamboo Hills Fiber Logo" class="mx-auto h-24 w-auto" />
+    <img src="Assets/head.png" alt="Lightning Icon Logo" class="mx-auto h-24 w-auto" />
+  </div>
+</section>
+
+
+
+<style>
+  .partner-icon {
+    width: 100px;  /* Increased icon size */
+    height: auto;
+    margin: 0 auto;
+    transition: transform 0.3s ease;
+  }
+
+  .partner-icon:hover {
+    transform: scale(1.1); /* Slight zoom on hover for interactivity */
+  }
+
+  #ecosystem-partners .partners-logos {
+    gap: 2.5rem; /* Increased spacing */
+  }
+</style>
+
+
+  <style>
+    /* Container and Section */
+    .events {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    /* Cards Container */
+    .events-cards {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Individual Event Card */
+    .event-card {
+      position: relative;
+      flex: 1 1 300px;
+      max-width: 350px;
+      height: 220px;
+      border-radius: 12px;
+      color: #fff;
+      cursor: pointer;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      outline-offset: 4px;
+    }
+
+    .event-card:focus,
+    .event-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      outline: none;
+    }
+
+    /* Overlay for better text readability */
+    .event-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+      border-radius: 12px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Content inside card */
+    .event-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .event-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 0.3rem 0;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    }
+
+    .event-time {
+      font-size: 1rem;
+      font-weight: 500;
+      opacity: 0.85;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+
+    /* Arrow */
+    .event-arrow {
+      position: absolute;
+      top: 50%;
+      right: 1.5rem;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      user-select: none;
+      pointer-events: none;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .events-cards {
+        flex-direction: column;
+        align-items: center;
+      }
+      .event-card {
+        max-width: 90vw;
+        height: 200px;
+      }
+    }
+  </style>
+
+
+  <!-- Events Section -->
+  <section class="events" aria-labelledby="events-heading">
+    <h2 id="events-heading" class="section-title">Upcoming Events</h2>
+    <div class="events-cards">
+      <article class="event-card" tabindex="0" aria-label="Introductory class, offline at 8:30 PM" style="background-image: url('https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=600&q=80');">
+        <div class="event-overlay"></div>
+        <div class="event-content">
+          <h3 class="event-title">Introductory Class</h3>
+          <time class="event-time" datetime="2024-01-01T20:30">Offline · 8:30 PM</time>
+        </div>
+        <div class="event-arrow" aria-hidden="true">→</div>
+      </article>
+
+      <article class="event-card" tabindex="0" aria-label="Mentor insights, online at 11:00 AM" style="background-image: url('https://images.unsplash.com/photo-1590080877779-478b918da257?auto=format&fit=crop&w=600&q=80');">
+        <div class="event-overlay"></div>
+        <div class="event-content">
+          <h3 class="event-title">Mentor Insights</h3>
+          <time class="event-time" datetime="2024-01-01T11:00">Online · 11:00 AM</time>
+        </div>
+        <div class="event-arrow" aria-hidden="true">→</div>
+      </article>
+
+      <article class="event-card" tabindex="0" aria-label="Networking meet, offline at 2:15 PM" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80');">
+        <div class="event-overlay"></div>
+        <div class="event-content">
+          <h3 class="event-title">Networking Meet</h3>
+          <time class="event-time" datetime="2024-01-01T14:15">Offline · 2:15 PM</time>
+        </div>
+        <div class="event-arrow" aria-hidden="true">→</div>
+      </article>
+    </div>
+  </section>
+
+
+
+
+
+<section id="apply" aria-label="Application Form">
+  <h2>Join the Elite</h2>
+  <p>
+    Ready to transform your idea into a global business? Apply for our accelerator program and join the ranks of successful founders.
+  </p>
+  <form onsubmit="handleApplication(event)" class="apply-form" novalidate>
+    <div class="grid md:grid-cols-2 gap-6 mb-6">
+      <div>
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" required autocomplete="given-name" />
+      </div>
+      <div>
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" required autocomplete="family-name" />
+      </div>
+    </div>
+    <div class="mb-6">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required autocomplete="email" />
+    </div>
+    <div class="mb-6">
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required autocomplete="tel" />
+    </div>
+    <div class="mb-6">
+      <label for="startup">Startup Name</label>
+      <input type="text" id="startup" name="startup" autocomplete="organization" />
+    </div>
+    <div class="mb-6">
+      <label for="idea">Describe Your Idea or Business</label>
+      <textarea id="idea" name="idea" rows="5" required placeholder="Tell us about your innovation, market opportunity, and traction..."></textarea>
+    </div>
+    <div class="mb-6">
+      <label for="stage">Startup Stage</label>
+      <select id="stage" name="stage" required>
+        <option value="" disabled selected>Select stage...</option>
+        <option value="idea">Idea Stage</option>
+        <option value="mvp">MVP/Prototype</option>
+        <option value="early">Early Revenue</option>
+        <option value="growth">Growth Stage</option>
+      </select>
+    </div>
+    <!-- Add additional form fields and submit button as needed -->
+    <button type="submit" class="btn-primary" aria-label="Submit application form">Submit Application</button>
+  </form>
+</section>
+
+  <footer>
+    <div class="container px-6">
+      <div>
+        <a href="#home" class="logo mb-6" aria-label="Kase Global Accelerator Home">Kase</a>
+        <p>
+          Empowering the next generation of global founders through accelerated innovation and entrepreneurship.
+        </p>
+        <div class="flex space-x-6 mt-4 text-yellow-main">
+          <a href="#" aria-label="Website" class="hover:text-white">🌐</a>
+          <a href="#" aria-label="Facebook" class="hover:text-white">📘</a>
+          <a href="#" aria-label="Twitter" class="hover:text-white">🐦</a>
+          <a href="#" aria-label="Instagram" class="hover:text-white">📷</a>
+        </div>
+      </div>
+      <div>
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="#programs">Launch Accelerator</a></li>
+          <li><a href="#programs">Global Expansion</a></li>
+          <li><a href="#programs">Scale-up Program</a></li>
+          <li><a href="#programs">Mentorship Network</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Startup Playbook</a></li>
+          <li><a href="#">Investor Database</a></li>
+          <li><a href="#">Success Stories</a></li>
+          <li><a href="#">Career Services</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>Email: <a href="mailto:admissions@kase.edu">admissions@kase.edu</a></p>
+        <p>Phone: <a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+        <p>San Francisco, CA | New York, NY</p>
+      </div>
+    </div>
+    <div class="bottom-text">
+      <p>© 2023 Kase. Transforming ideas into global enterprises. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Toggle mobile menu
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    // Smooth scroll
+    function scrollToSection(sectionId) {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      if (!document.getElementById('mobile-menu').classList.contains('hidden')) {
+        toggleMenu();
+      }
+    }
+
+    // Notifications
+    function showNotification(message, type = 'success') {
+      let container = document.getElementById('notification-container');
+      if (!container) {
+        const div = document.createElement('div');
+        div.id = 'notification-container';
+        div.style.position = 'fixed';
+        div.style.top = '1rem';
+        div.style.right = '1rem';
+        div.style.zIndex = 10000;
+        document.body.appendChild(div);
+        container = div;
+      }
+      const notification = document.createElement('div');
+      notification.textContent = message;
+      notification.style.backgroundColor = type === 'success' ? 'var(--yellow-main)' : '#fdecea';
+      notification.style.color = type === 'success' ? 'var(--purple-dark)' : '#b71c1c';
+      notification.style.padding = '1rem 1.5rem';
+      notification.style.marginTop = '1rem';
+      notification.style.borderRadius = '0.5rem';
+      notification.style.boxShadow = '0 4px 12px rgba(90,54,138,0.7)';
+      notification.style.fontWeight = '700';
+      notification.style.maxWidth = '320px';
+      notification.style.opacity = '1';
+      notification.style.transition = 'opacity 0.5s ease-in-out';
+      container.appendChild(notification);
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => notification.remove(), 500);
+      }, 5000);
+    }
+
+    // Handle form submission
+    function handleApplication(e) {
+      e.preventDefault();
+      const form = e.target;
+      const fd = new FormData(form);
+      const firstName = fd.get('firstName');
+      const lastName = fd.get('lastName');
+      const email = fd.get('email');
+      const startup = fd.get('startup') || 'your startup';
+      const stage = fd.get('stage') || 'selected';
+      showNotification(`Thank you, ${firstName}! Your application for the ${stage} program has been received. We'll review your submission for ${startup} and get back to you at ${email} within 24-48 hours.`);
+      form.reset();
+    }
+
+    // Testimonial Rotation
+    let currentTestimonial = 0;
+     testimonials = document.querySelectorAll('.testimonial');
+
+    function showTestimonial(index) {
+      testimonials.forEach((el, i) => {
+        el.classList.toggle('active', i === index);
+        el.setAttribute('aria-hidden', i !== index);
+      });
+    }
+
+    function nextTestimonial() {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    }
+
+    showTestimonial(currentTestimonial);
+    setInterval(nextTestimonial, 7000);
+
+    // Dummy function placeholder for Learn More buttons
+    function showProgramDetails(program) {
+      alert(`Learn more about the ${program} program - Details to be implemented.`);
+    }
+  </script>
+
+</body>
+</html>
